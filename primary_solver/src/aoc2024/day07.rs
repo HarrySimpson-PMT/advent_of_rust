@@ -19,7 +19,6 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
     }
 
     let mut total_sum = 0;
-
     for line in lines {
         if let Some((target_str, numbers_str)) = line.split_once(":") {
             let target: i64 = target_str.trim().parse().unwrap_or(0);

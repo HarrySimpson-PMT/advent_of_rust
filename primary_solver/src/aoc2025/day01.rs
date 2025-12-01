@@ -1,0 +1,142 @@
+use std::collections::BinaryHeap;
+use std::collections::HashMap;
+use tokio::io;
+use tokio::io::AsyncReadExt;
+
+pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
+    println!("Solving Day 1, Part A");
+    let mut position = 50;
+    let mut result = 0;
+    //mod result by 100 for each rotation to see if % 100 == 0
+    for line in lines {
+        //parse line L14 or R12 where L should decrement and right should increment
+        let (turn, dist) = line.split_at(1);
+        let dist: i32 = dist.parse().unwrap();
+        match turn {
+            "L" => {
+                position -= dist;
+            }
+            "R" => {
+                position += dist;
+            }
+            _ => {
+                println!("Invalid turn direction: {}", turn);
+            }
+        }
+        if position % 100 == 0 {
+            result += 1;
+        }
+    }
+    println!("Final position: {}, Result: {}", position, result);
+    println!();
+
+    Ok(())
+}
+
+//6542 high
+
+//6540 maybe
+
+//6522 high
+// 6127 incorrect.
+//6107 low
+
+pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
+    println!("Solving Day 1, Part B");
+    let mut position = 50;
+    let mut LastPosition = 50;
+    let mut result = 0;
+    let mut curturn = 1;
+    for line in lines {
+        let (turn, dist) = line.split_at(1);
+        let dist: i32 = dist.parse().unwrap();
+        match turn {
+            "L" => {
+                position -= dist;
+                let last_hundreds = LastPosition / 100;
+                let current_hundreds = position / 100;
+                if last_hundreds == current_hundreds && position < 0 && LastPosition != 0 {
+                    print!(" Result: {} ", result);
+                    result += 1;
+                    println!(
+                        " Debug: LastPosition: {}, Current Position: {} Score {}",
+                        LastPosition, position, result
+                    );
+                }
+                if last_hundreds != current_hundreds {
+                    print!(" Result: {} ", result);
+                    let extra = if LastPosition!=0 { 1 } else { 0 };
+                    let diff = (current_hundreds - last_hundreds).abs() + extra;
+                    result += diff;
+                    println!(
+                        " Debug: LastPosition: {}, Current Position: {} Score {}",
+                        LastPosition, position, result
+                    );
+                }
+                if (position == 0) {
+                    print!(" Result: {} ", result);
+                    result += 1;
+                    println!(
+                        " Debug: LastPosition: {}, Current Position: {} Score {}",
+                        LastPosition, position, result
+                    );
+                }
+            }
+            "R" => {
+                position += dist;
+
+                let last_hundreds = LastPosition / 100;
+                let current_hundreds = position / 100;
+                if last_hundreds != current_hundreds {
+                    print!(" Result: {} ", result);
+                    let diff = (current_hundreds - last_hundreds).abs();
+                    result += diff;
+                    println!(
+                        " Debug: LastPosition: {}, Current Position: {} Score {}",
+                        LastPosition, position, result
+                    );
+                }
+            }
+            _ => {
+                println!("Invalid turn direction: {}", turn);
+            }
+        }
+        position = position % 100;
+        if position < 0 {
+            position += 100;
+        }
+        LastPosition = position;
+
+        if curturn % 105 == 0 {
+   //         let _input = std::io::stdin().read_line(&mut String::new());
+        }
+        curturn += 1;
+    }
+
+    println!("Final position: {}, Result: {}", position, result);
+    println!();
+
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::get_input_for_puzzle;
+    use crate::Puzzle;
+    /// Determines the day name (e.g., "Day01") based on the module path
+    fn get_day_name() -> String {
+        let module_path = module_path!(); // e.g., "puzzles::day01"
+        let module_name = module_path.split("::").last().unwrap_or("Unknown");
+        module_name.to_string().replace("day", "Day")
+    }
+
+    fn get_puzzle(part: char) -> Puzzle {
+        let day = get_day_name().replace("Day", "").parse::<u8>().unwrap_or(1);
+        match part {
+            'A' => Puzzle::from_day_part(day, 'A'),
+            'B' => Puzzle::from_day_part(day, 'B'),
+            _ => panic!("Invalid part"),
+        }
+    }
+}

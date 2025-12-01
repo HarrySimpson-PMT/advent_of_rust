@@ -1,4 +1,0 @@
-Sample input for Day 2, Part Aca
-this is another line
-and another line
-then let us
