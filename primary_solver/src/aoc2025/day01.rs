@@ -1,7 +1,4 @@
-use std::collections::BinaryHeap;
-use std::collections::HashMap;
 use tokio::io;
-use tokio::io::AsyncReadExt;
 
 pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day 1, Part A");
@@ -44,48 +41,47 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
 pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day 1, Part B");
     let mut position = 50;
-    let mut LastPosition = 50;
+    let mut last_position = 50;
     let mut result = 0;
-    let mut curturn = 1;
     for line in lines {
         let (turn, dist) = line.split_at(1);
         let dist: i32 = dist.parse().unwrap();
         match turn {
             "L" => {
                 position -= dist;
-                let last_hundreds = LastPosition / 100;
+                let last_hundreds = last_position / 100;
                 let current_hundreds = position / 100;
-                if last_hundreds == current_hundreds && position < 0 && LastPosition != 0 {
+                if last_hundreds == current_hundreds && position < 0 && last_position != 0 {
                     print!(" Result: {} ", result);
                     result += 1;
                     println!(
                         " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        LastPosition, position, result
+                        last_position, position, result
                     );
                 }
                 if last_hundreds != current_hundreds {
                     print!(" Result: {} ", result);
-                    let extra = if LastPosition!=0 { 1 } else { 0 };
+                    let extra = if last_position!=0 { 1 } else { 0 };
                     let diff = (current_hundreds - last_hundreds).abs() + extra;
                     result += diff;
                     println!(
                         " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        LastPosition, position, result
+                        last_position, position, result
                     );
                 }
-                if (position == 0) {
+                if position == 0 {
                     print!(" Result: {} ", result);
                     result += 1;
                     println!(
                         " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        LastPosition, position, result
+                        last_position, position, result
                     );
                 }
             }
             "R" => {
                 position += dist;
 
-                let last_hundreds = LastPosition / 100;
+                let last_hundreds = last_position / 100;
                 let current_hundreds = position / 100;
                 if last_hundreds != current_hundreds {
                     print!(" Result: {} ", result);
@@ -93,7 +89,7 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
                     result += diff;
                     println!(
                         " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        LastPosition, position, result
+                        last_position, position, result
                     );
                 }
             }
@@ -105,12 +101,7 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
         if position < 0 {
             position += 100;
         }
-        LastPosition = position;
-
-        if curturn % 105 == 0 {
-   //         let _input = std::io::stdin().read_line(&mut String::new());
-        }
-        curturn += 1;
+        last_position = position;
     }
 
     println!("Final position: {}, Result: {}", position, result);

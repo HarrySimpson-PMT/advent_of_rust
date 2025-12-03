@@ -4,7 +4,7 @@ use tokio::time::timeout;
 
 #[allow(dead_code)]
 pub async fn send_data_to_pico(lines: &Vec<String>) -> io::Result<()> {
-    let host = "10.0.0.139";
+    let host = "10.0.0.126";
     let port = 1234;
     let address = format!("{}:{}", host, port);
     println!(
@@ -41,8 +41,9 @@ pub async fn send_data_to_pico(lines: &Vec<String>) -> io::Result<()> {
     //combine lines into a single string
     let lines = lines.join("\n");
     let transmission_size = lines.len();
-    //send LEN: transmission size
+    println!("Transmission size: {}", transmission_size);
     stream.write_all(format!("LEN:{}", transmission_size).as_bytes()).await?;
+        read_ack().await;
 
     //send the data
     stream.write_all(lines.as_bytes()).await?;

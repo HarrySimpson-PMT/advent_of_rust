@@ -13,12 +13,12 @@ use std::time::Instant;
 #[tokio::main]
 async fn main() {
     let day = 1;
-    let year = 2025;    
+    let year = 2025;
 
     if let Some(input_lines) = get_input_for_puzzle(day, year) {
         print!("Input lines loaded: {}\n", input_lines.len());
         let start_time = Instant::now();
-        let result = aoc2025::day01::solve_b(&input_lines).await;
+        let result = aoc2025::day01::solve_a(&input_lines).await;
         let duration = start_time.elapsed();
 
         println!("Result: {:?}", result);
@@ -27,7 +27,7 @@ async fn main() {
         println!("Input file not found for puzzle {}", day);
     }
 
-    return;
+    //return;
 
     // This will send to whatever is running on the Pico side
     let somelines = match get_input_for_puzzle(day, year) {
@@ -53,7 +53,7 @@ fn get_input_for_puzzle(day: i32, year: i32) -> Option<Vec<String>> {
     } else {
         format!("day{}", day)
     };
-    let path_str = format!("primary_solver\\inputs\\{:02}\\{:02}\\file.txt", year, daystring);
+    let path_str = format!("primary_solver/inputs/{:02}/{:02}/file.txt", year, daystring);
     let input_path = Path::new(&path_str);
     print!("{:?}", input_path);
     fs::read_to_string(input_path)
