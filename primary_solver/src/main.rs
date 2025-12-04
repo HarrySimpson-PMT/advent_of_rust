@@ -12,13 +12,13 @@ use std::time::Instant;
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() {
-    let day = 1;
+    let day = 4;
     let year = 2025;
 
     if let Some(input_lines) = get_input_for_puzzle(day, year) {
         print!("Input lines loaded: {}\n", input_lines.len());
         let start_time = Instant::now();
-        let result = aoc2025::day01::solve_a(&input_lines).await;
+        let result = aoc2025::day04::solve_b(&input_lines).await;
         let duration = start_time.elapsed();
 
         println!("Result: {:?}", result);
@@ -27,7 +27,7 @@ async fn main() {
         println!("Input file not found for puzzle {}", day);
     }
 
-    //return;
+    return;
 
     // This will send to whatever is running on the Pico side
     let somelines = match get_input_for_puzzle(day, year) {
