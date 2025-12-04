@@ -5,7 +5,7 @@ use tokio::io;
 use tokio::io::AsyncReadExt;
 
 pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
-    println!("Solving Day 1, Part A");
+    println!("Solving Day 2, Part A");
     let ranges: Vec<String> = lines[0]
         .split(|c| c == ',')
         .map(|s| s.trim().parse().unwrap())
@@ -33,7 +33,7 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
 }
 
 pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
-    println!("Solving Day 1, Part B");
+    println!("Solving Day 2, Part B");
      let ranges: Vec<String> = lines[0]
         .split(|c| c == ',')
         .map(|s| s.trim().parse().unwrap())
