@@ -1,11 +1,4 @@
-use core::num;
-use std::collections::BinaryHeap;
-use std::collections::HashMap;
-use std::os::linux::raw::stat;
-use std::result;
 use tokio::io;
-use tokio::io::AsyncReadExt;
-use tokio::join;
 
 pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day 4, Part A");
@@ -64,7 +57,7 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
     //now we need a queue to handle all items with less than 4 connections and process them
     let mut queue: Vec<(usize, usize)> = vec![];
     //2d vec of vec(x, y) of size lines.len() x lines[0].len()
-    let mut Items: Vec<Vec<Vec<(usize, usize)>>> = vec![vec![vec![]; lines[0].len()]; lines.len()];
+    let mut items: Vec<Vec<Vec<(usize, usize)>>> = vec![vec![vec![]; lines[0].len()]; lines.len()];
     for i in 0..lines.len() {
         for j in 0..lines[i].len() {
             let c = lines[i].chars().nth(j).unwrap();
@@ -86,11 +79,11 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
                         }
                         let nc = lines[ni as usize].chars().nth(nj as usize).unwrap();
                         if nc == '@' {
-                            Items[i][j].push((ni as usize, nj as usize));
+                            items[i][j].push((ni as usize, nj as usize));
                         }
                     }
                 }
-                if Items[i][j].len() < 4 {
+                if items[i][j].len() < 4 {
                     queue.push((i, j));
                 }
             }
@@ -98,7 +91,7 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
     }
     while !queue.is_empty() {
         let (i, j) = queue.pop().unwrap();
-        let connections = Items[i][j].len();
+        let connections = items[i][j].len();
         if connections >= 4 {
             continue;
         }
@@ -112,18 +105,18 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
         lines[i].replace_range(j..=j, ".");
 
         //remove this item from all its neighbors
-        let neighbors = Items[i][j].clone();
+        let neighbors = items[i][j].clone();
         for (ni, nj) in neighbors {
-            let index = Items[ni][nj]
+            let index = items[ni][nj]
                 .iter()
                 .position(|&(x, y)| x == i && y == j)
                 .unwrap();
-            Items[ni][nj].remove(index);
-            if Items[ni][nj].len() < 4 {
+            items[ni][nj].remove(index);
+            if items[ni][nj].len() < 4 {
                 queue.push((ni, nj));
             }
         }
-        Items[i][j].clear();
+        items[i][j].clear();
     }
     println!("Result is {}", result);
     //print lines

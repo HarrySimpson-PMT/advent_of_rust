@@ -1,8 +1,4 @@
-use core::num;
-use std::collections::BinaryHeap;
-use std::collections::HashMap;
 use tokio::io;
-use tokio::io::AsyncReadExt;
 
 pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day 2, Part A");

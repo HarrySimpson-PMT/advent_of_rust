@@ -17,7 +17,6 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
                 position += dist;
             }
             _ => {
-                println!("Invalid turn direction: {}", turn);
             }
         }
         if position % 100 == 0 {
@@ -25,18 +24,9 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
         }
     }
     println!("Final position: {}, Result: {}", position, result);
-    println!();
 
     Ok(())
 }
-
-//6542 high
-
-//6540 maybe
-
-//6522 high
-// 6127 incorrect.
-//6107 low
 
 pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day 1, Part B");
@@ -52,30 +42,15 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
                 let last_hundreds = last_position / 100;
                 let current_hundreds = position / 100;
                 if last_hundreds == current_hundreds && position < 0 && last_position != 0 {
-                    print!(" Result: {} ", result);
                     result += 1;
-                    println!(
-                        " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        last_position, position, result
-                    );
                 }
                 if last_hundreds != current_hundreds {
-                    print!(" Result: {} ", result);
                     let extra = if last_position!=0 { 1 } else { 0 };
                     let diff = (current_hundreds - last_hundreds).abs() + extra;
                     result += diff;
-                    println!(
-                        " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        last_position, position, result
-                    );
                 }
                 if position == 0 {
-                    print!(" Result: {} ", result);
                     result += 1;
-                    println!(
-                        " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        last_position, position, result
-                    );
                 }
             }
             "R" => {
@@ -84,13 +59,8 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
                 let last_hundreds = last_position / 100;
                 let current_hundreds = position / 100;
                 if last_hundreds != current_hundreds {
-                    print!(" Result: {} ", result);
                     let diff = (current_hundreds - last_hundreds).abs();
                     result += diff;
-                    println!(
-                        " Debug: LastPosition: {}, Current Position: {} Score {}",
-                        last_position, position, result
-                    );
                 }
             }
             _ => {
@@ -105,7 +75,6 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
     }
 
     println!("Final position: {}, Result: {}", position, result);
-    println!();
 
     Ok(())
 }
