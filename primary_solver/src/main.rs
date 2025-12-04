@@ -1,5 +1,6 @@
 use std::fs;
 use std::path::Path;
+mod solver;
 mod aoc2024;
 mod aoc2025;
 mod comms;
@@ -9,11 +10,14 @@ use comms::pico_sender::send_data_to_pico;
 
 use std::time::Instant;
 
+use crate::solver::DaySolver;
+
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() {
-    let day = 1;
-    let year = 2025;
+    let day_solver = aoc2025::day01::Day01;
+    let day = day_solver.get_day() as i32;
+    let year = day_solver.get_year() as i32;
     let part = 3;
     let sample = false;
 
@@ -23,14 +27,14 @@ async fn main() {
         let full_time_start = Instant::now();
         if part & 1 != 0 {
             let start_time = Instant::now();
-            let _result = aoc2025::day01::solve_a(&input_lines).await;
+            let _result = day_solver.solve_a(&input_lines).await;
             let duration = start_time.elapsed();
             println!("Time taken: {:.2?}", duration);
         }
         println!("-----------------------------------");
         if part & 2 != 0 {
             let start_time = Instant::now();
-            let _result = aoc2025::day01::solve_b(&input_lines).await;
+            let _result = day_solver.solve_b(&input_lines).await;
             let duration = start_time.elapsed();
             println!("Time taken: {:.2?}", duration);
         }    
