@@ -1,4 +1,22 @@
 use tokio::io;
+use crate::solver::DaySolver;
+
+pub struct Day;
+
+impl DaySolver for Day {
+    fn get_day(&self) -> u8 {
+        2
+    }
+    fn get_year(&self) -> u16 {
+        2025
+    }
+    async fn solve_a(&self, lines: &Vec<String>) -> io::Result<()> {
+        super::day02::solve_a(lines).await
+    }
+    async fn solve_b(&self, lines: &Vec<String>) -> io::Result<()> {
+        super::day02::solve_b(lines).await
+    }
+}
 
 pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day 2, Part A");

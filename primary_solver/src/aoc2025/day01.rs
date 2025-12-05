@@ -1,9 +1,9 @@
 use tokio::io;
 use crate::solver::DaySolver;
 
-pub struct Day01;
+pub struct Day;
 
-impl DaySolver for Day01 {
+impl DaySolver for Day {
     async fn solve_a(&self, lines: &Vec<String>) -> io::Result<()> {
         solve_a(lines).await
     }
@@ -12,11 +12,11 @@ impl DaySolver for Day01 {
         solve_b(lines).await
     }
 
-    fn get_day(&self) -> u32 {
+    fn get_day(&self) -> u8{
         1
     }
 
-    fn get_year(&self) -> u32 {
+    fn get_year(&self) -> u16 {
         2025
     }
 }

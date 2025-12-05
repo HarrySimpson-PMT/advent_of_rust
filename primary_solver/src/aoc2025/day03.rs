@@ -1,4 +1,25 @@
 use tokio::io;
+use crate::solver::DaySolver;
+
+pub struct Day;
+
+impl DaySolver for Day {
+    async fn solve_a(&self, lines: &Vec<String>) -> io::Result<()> {
+        solve_a(lines).await
+    }
+
+    async fn solve_b(&self, lines: &Vec<String>) -> io::Result<()> {
+        solve_b(lines).await
+    }
+
+    fn get_day(&self) -> u8{
+        3
+    }
+
+    fn get_year(&self) -> u16 {
+        2025
+    }
+}
 
 pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day 3, Part A");
@@ -29,7 +50,6 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
         while !stack.is_empty() {
             current.insert_str(0, &stack.pop().unwrap().to_string());
         }
-        println!("Current number formed: {}", current);
         result += current.parse::<i64>().unwrap();
     }
     println!("Result: {}", result);
@@ -58,7 +78,6 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
         while !stack.is_empty() {
             current.insert_str(0, &stack.pop().unwrap().to_string());
         }
-        println!("Current number formed: {}", current);
         result += current.parse::<i64>().unwrap();
     }
     println!("Result: {}", result);

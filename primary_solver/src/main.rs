@@ -15,13 +15,12 @@ use crate::solver::DaySolver;
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() {
-    let day_solver = aoc2025::day01::Day01;
-    let day = day_solver.get_day() as i32;
-    let year = day_solver.get_year() as i32;
+    let day_solver = aoc2025::day04::Day;
     let part = 3;
     let sample = false;
 
-    if let Some(input_lines) = get_input_for_puzzle(day, year, sample) {
+    if let Some(input_lines) = get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample) {
+        let day = day_solver.get_day();
         println!();
         println!("-----------------------------------");
         let full_time_start = Instant::now();
@@ -43,15 +42,15 @@ async fn main() {
         println!("Total time taken for Day {}: {:.2?}", day, full_duration);
         
     } else {
-        println!("Input file not found for puzzle {}", day);
+        println!("Input file not found for puzzle {}", day_solver.get_day());
     }
 
     return; //this is used to stop execution before sending to pico
 
-    let somelines = match get_input_for_puzzle(day, year, sample) {
+    let somelines = match get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample) {
         Some(lines) => lines,
         None => {
-            println!("Input file not found for puzzle {}", day);
+            println!("Input file not found for puzzle {}", day_solver.get_day());
             return;
         }
     };
@@ -62,7 +61,7 @@ async fn main() {
     }
 }
 
-fn get_input_for_puzzle(day: i32, year: i32, sample: bool
+fn get_input_for_puzzle(day: u8, year: u16, sample: bool
 ) -> Option<Vec<String>> {
     let daystring = if day < 10 {
         format!("day0{}", day)
