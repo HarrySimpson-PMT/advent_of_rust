@@ -15,7 +15,7 @@ use crate::solver::DaySolver;
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() {
-    let day_solver = aoc2025::day04::Day;
+    let day_solver = aoc2025::day05::Day;
     let part = 3;
     let sample = false;
 
