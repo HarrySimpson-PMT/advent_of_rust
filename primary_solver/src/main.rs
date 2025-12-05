@@ -47,6 +47,8 @@ async fn main() {
         println!("Input file not found for puzzle {}", day_solver.get_day());
     }
     if transmit_to_pico {
+        println!("-----------------------------------");
+        let start_time = Instant::now();
         let somelines =
             match get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample) {
                 Some(lines) => lines,
@@ -56,8 +58,9 @@ async fn main() {
                 }
             };
         let result = send_data_to_pico(&somelines).await;
+        let duration = start_time.elapsed();
         match result {
-            Ok(_) => println!("Data sent to Pico successfully"),
+            Ok(_) => println!("Pico recieved and returned results succesfully in {:.2?}", duration),
             Err(e) => println!("Error sending data to Pico: {:?}", e),
         }
     }
@@ -72,7 +75,7 @@ fn get_input_for_puzzle(day: u8, year: u16, sample: bool) -> Option<Vec<String>>
     let file_name = if sample { "sample.txt" } else { "file.txt" };
     let path_str = format!("primary_solver/inputs/{}/{}/{}", year, daystring, file_name);
     let input_path = Path::new(&path_str);
-    print!("{:?}", input_path);
+    // println!("{:?}", input_path);
     fs::read_to_string(input_path)
         .ok()
         .map(|content| content.lines().map(String::from).collect())

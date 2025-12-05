@@ -7,16 +7,16 @@ pub async fn send_data_to_pico(lines: &Vec<String>) -> io::Result<()> {
     let host = "10.0.0.126";
     let port = 1234;
     let address = format!("{}:{}", host, port);
-    println!(
-        "Connecting to {}:{} to send {} lines",
-        host,
-        port,
-        lines.len()
-    );
+    // println!(
+    //     "Connecting to {}:{} to send {} lines",
+    //     host,
+    //     port,
+    //     lines.len()
+    // );
 
     let mut stream = match timeout(Duration::from_secs(5), TcpStream::connect(&address)).await {
         Ok(Ok(stream)) => {
-            println!("Successfully connected to the server!");
+            // println!("Successfully connected to the server!");
             stream
         }
         Ok(Err(e)) => {
@@ -41,7 +41,7 @@ pub async fn send_data_to_pico(lines: &Vec<String>) -> io::Result<()> {
     //combine lines into a single string
     let lines = lines.join("\n");
     let transmission_size = lines.len();
-    println!("Transmission size: {}", transmission_size);
+    // println!("Transmission size: {}", transmission_size);
     stream.write_all(format!("LEN:{}", transmission_size).as_bytes()).await?;
         read_ack().await;
 
@@ -66,6 +66,6 @@ pub async fn send_data_to_pico(lines: &Vec<String>) -> io::Result<()> {
     };
     println!("Received: {}", String::from_utf8_lossy(&buffer[..n]));
 
-    println!("Data sent successfully!");
+    // println!("Data sent successfully!");
     Ok(())
 }
