@@ -1,9 +1,9 @@
 use std::fs;
 use std::path::Path;
-mod solver;
 mod aoc2024;
 mod aoc2025;
 mod comms;
+mod solver;
 
 #[allow(unused_imports)]
 use comms::pico_sender::send_data_to_pico;
@@ -15,11 +15,14 @@ use crate::solver::DaySolver;
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() {
-    let day_solver = aoc2025::day05::Day;
+    let day_solver = aoc2025::day01::Day;
     let part = 3;
     let sample = false;
+    let transmit_to_pico = true;
 
-    if let Some(input_lines) = get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample) {
+    if let Some(input_lines) =
+        get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample)
+    {
         let day = day_solver.get_day();
         println!();
         println!("-----------------------------------");
@@ -36,49 +39,38 @@ async fn main() {
             let _result = day_solver.solve_b(&input_lines).await;
             let duration = start_time.elapsed();
             println!("Time taken: {:.2?}", duration);
-        }    
+        }
         let full_duration = full_time_start.elapsed();
         println!("-----------------------------------");
         println!("Total time taken for Day {}: {:.2?}", day, full_duration);
-        
     } else {
         println!("Input file not found for puzzle {}", day_solver.get_day());
     }
-
-    return; //this is used to stop execution before sending to pico
-
-    let somelines = match get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample) {
-        Some(lines) => lines,
-        None => {
-            println!("Input file not found for puzzle {}", day_solver.get_day());
-            return;
+    if transmit_to_pico {
+        let somelines =
+            match get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample) {
+                Some(lines) => lines,
+                None => {
+                    println!("Input file not found for puzzle {}", day_solver.get_day());
+                    return;
+                }
+            };
+        let result = send_data_to_pico(&somelines).await;
+        match result {
+            Ok(_) => println!("Data sent to Pico successfully"),
+            Err(e) => println!("Error sending data to Pico: {:?}", e),
         }
-    };
-    let result = send_data_to_pico(&somelines).await;
-    match result {
-        Ok(_) => println!("Data sent to Pico successfully"),
-        Err(e) => println!("Error sending data to Pico: {:?}", e),
     }
 }
 
-fn get_input_for_puzzle(day: u8, year: u16, sample: bool
-) -> Option<Vec<String>> {
+fn get_input_for_puzzle(day: u8, year: u16, sample: bool) -> Option<Vec<String>> {
     let daystring = if day < 10 {
         format!("day0{}", day)
     } else {
         format!("day{}", day)
     };
-    let file_name = if sample {
-        "sample.txt"
-    } else {
-        "file.txt"
-    };
-    let path_str = format!(
-        "primary_solver/inputs/{}/{}/{}",
-        year,
-        daystring,
-        file_name
-    );
+    let file_name = if sample { "sample.txt" } else { "file.txt" };
+    let path_str = format!("primary_solver/inputs/{}/{}/{}", year, daystring, file_name);
     let input_path = Path::new(&path_str);
     print!("{:?}", input_path);
     fs::read_to_string(input_path)
