@@ -64,11 +64,8 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
 pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
     let mut lines = lines.clone();
     println!("Solving Day 4, Part B");
-    //we need to create an adjacency list of the graph
     let mut result = 0;
-    //now we need a queue to handle all items with less than 4 connections and process them
     let mut queue: Vec<(usize, usize)> = vec![];
-    //2d vec of vec(x, y) of size lines.len() x lines[0].len()
     let mut items: Vec<Vec<Vec<(usize, usize)>>> = vec![vec![vec![]; lines[0].len()]; lines.len()];
     for i in 0..lines.len() {
         for j in 0..lines[i].len() {

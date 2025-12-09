@@ -15,11 +15,10 @@ use crate::solver::DaySolver;
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() {
-    let day_solver = aoc2025::day06::Day;
-    let part = 1|2;
-    let sample = false;
-    let transmit_to_pico = false;
-
+    let day_solver = aoc2025::day04::Day;
+    let part = 3;
+    let sample = true;
+    let transmit_to_pico = true;
     if let Some(input_lines) =
         get_input_for_puzzle(day_solver.get_day(), day_solver.get_year(), sample)
     {

@@ -66,7 +66,7 @@ pub async fn solve_a(lines: &Vec<String>) -> io::Result<()> {
 
 pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
     println!("Solving Day {}, Part B", Day.get_day());
-        let mut result: u64 = 0;
+    let mut result: u64 = 0;
     let mut split_index = 0;
     for (i, line) in lines.iter().enumerate() {
         if line.trim().is_empty() {
