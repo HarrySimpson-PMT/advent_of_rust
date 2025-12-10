@@ -15,8 +15,8 @@ use crate::solver::DaySolver;
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() {
-    let day_solver = aoc2025::day09::Day;
-    let part = 3;
+    let day_solver = aoc2025::day10::Day;
+    let part = 2;
     let sample = false;
     let transmit_to_pico = false;
     if let Some(input_lines) =
