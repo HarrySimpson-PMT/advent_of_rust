@@ -127,6 +127,12 @@ pub async fn solve_b(lines: &Vec<String>) -> io::Result<()> {
         }
         items[i][j].clear();
     }
+    //print map
+    // for line in &lines {
+    //     println!("{}", line);
+    // }
+
+
     println!("Result is {}", result);
     //print lines
     // for line in lines {
